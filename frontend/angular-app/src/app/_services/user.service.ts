@@ -11,7 +11,7 @@ import { UserResponseDTO } from '../dto/UserResponseDTO';
 })
 export class UserService {
   PATH_OF_API = 'http://localhost:8888';
-  PATH_OF_API_AUTH = 'http://localhost:8888/mobility';
+  PATH_OF_API_AUTH = 'http://localhost:8888';  // Changed from /mobility - now points to monolith only
 
   requestHeader = new HttpHeaders({ 'No-Auth': 'True' });
   httpOptions = {

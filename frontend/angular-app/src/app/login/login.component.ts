@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthUserService } from '../_services/auth-user.service';
+import { UserAuthService } from '../_services/user-auth.service';
 import { StorageService } from '../_services/storage.service';
 import { Router } from '@angular/router';
 import { LoginRequestDTO } from '../dto/LoginRequestDTO';
@@ -19,9 +19,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private storageService: StorageService,
-    private authUserService: AuthUserService,
+    private userAuthService: UserAuthService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     if (this.storageService.isLoggedIn()) {
@@ -36,7 +36,7 @@ export class LoginComponent implements OnInit {
       password: loginForm.value.password
     };
 
-    this.authUserService.login(loginData).subscribe({
+    this.userAuthService.login(loginData).subscribe({
       next: (response: LoginResponseDTO) => {
         this.storageService.saveUser(response);
         this.storageService.saveToken(response.jwt);
@@ -53,6 +53,6 @@ export class LoginComponent implements OnInit {
     });
   }
 }
-  
+
 
 

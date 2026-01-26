@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthUserService } from '../_services/auth-user.service';
+import { UserAuthService } from '../_services/user-auth.service';
 import { Router } from '@angular/router';
 import { UserRequestDTO } from '../dto/UserRequestDTO';
 import { Gender } from '../dto/enums/Gender';
@@ -13,9 +13,9 @@ import Swal from 'sweetalert2'; // Import SweetAlert2
 })
 export class RegisterComponent {
   constructor(
-    private authUserService: AuthUserService,
+    private userAuthService: UserAuthService,
     private router: Router
-  ) {}
+  ) { }
 
   register(registerForm: NgForm): void {
     if (registerForm.invalid) {
@@ -44,7 +44,7 @@ export class RegisterComponent {
       password: formValue.password
     };
 
-    this.authUserService.createUser(user).subscribe({
+    this.userAuthService.register(user).subscribe({
       next: () => {
         Swal.fire({
           icon: 'success',

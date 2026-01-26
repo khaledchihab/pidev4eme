@@ -34,7 +34,7 @@ const routes: Routes = [
 
   // All other routes are protected
   { path: 'aboutus', component: AboutusComponent, canActivate: [AuthGuard] },
-  { path: 'form', component: FormComponent, canActivate: [AuthGuard]},
+  { path: 'form', component: FormComponent, canActivate: [AuthGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   { path: 'admin', component: BoardAdminComponent, canActivate: [AuthGuard] },
   { path: 'hero', component: HeroComponent, canActivate: [AuthGuard] },
@@ -53,8 +53,9 @@ const routes: Routes = [
   { path: 'user-details/:id', component: UserDetailsComponent, canActivate: [AuthGuard] },
   { path: 'university-list', component: UniversityListComponent, canActivate: [AuthGuard] },
   { path: 'application-history', component: ApplicationHistoryComponent, canActivate: [AuthGuard] },
-    { path: 'segmentation', component: SegmentationComponent },
-{ path: 'prediction', component: PredictionComponent },
+  // ML/AI features (stubs - no backend implementation)
+  { path: 'segmentation', component: SegmentationComponent, canActivate: [AuthGuard] },
+  { path: 'prediction', component: PredictionComponent, canActivate: [AuthGuard] },
 
   { path: '', redirectTo: 'home', pathMatch: 'full' }
 ];
