@@ -1,0 +1,30 @@
+import { Injectable } from '@angular/core';
+import { PageResponse } from '../dto/pageresponse-users';
+import { Observable } from 'rxjs';
+import { RoleResponseDTO } from '../interfaces/RoleResponseDTO';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class RoleService {
+  private apiUrl = 'http://localhost:8888/mobility/roles';
+
+  constructor(private http: HttpClient) { }
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('Token');
+    return new HttpHeaders({ Authorization: `Bearer ${token}` });
+  }
+
+  getRoles(page: number, size: number): Observable<PageResponse<RoleResponseDTO>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    return this.http.get<PageResponse<RoleResponseDTO>>(`${this.apiUrl}/all`, {
+      headers: this.getAuthHeaders(),
+      params,
+    });
+  }
+}
