@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { FormApplicationHistory } from '../dto/FormApplicationHistoryDTO';
-import { DynamicServiceService } from '../_services/api.service';
-import { AuthUserService } from '../_services/auth-user.service';
 import { FormapplicationService } from '../_services/formapplication.service';
 
 @Component({
@@ -10,25 +8,20 @@ import { FormapplicationService } from '../_services/formapplication.service';
   styleUrls: ['./application-history.component.css']
 })
 export class ApplicationHistoryComponent {
-userId!: string;
+  userId!: string;
   applications: FormApplicationHistory[] = [];
   isLoading = true;
 
   constructor(
-    private service: FormapplicationService,
-    private userService: AuthUserService
+    private service: FormapplicationService
   ) {}
 
   ngOnInit(): void {
-    const username = localStorage.getItem('Username');
-    if (username) {
-      this.userService.getUserByUsername(username).subscribe({
-        next: (user) => {
-          this.userId = user.id;
-          this.loadHistory();
-        },
-        error: (err) => console.error('Error fetching user', err)
-      });
+    const userStr = localStorage.getItem('User');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      this.userId = user.id;
+      this.loadHistory();
     }
   }
 

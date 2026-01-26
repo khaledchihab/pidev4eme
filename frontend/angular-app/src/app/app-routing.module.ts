@@ -26,6 +26,7 @@ import { ApplicationHistoryComponent } from './application-history/application-h
 import { AuthGuard } from './auth.guard';
 import { SegmentationComponent } from './interfaces/segmentation/segmentation.component';
 import { PredictionComponent } from './interfaces/prediction/prediction.component';
+import { AdminApplicationsComponent } from './admin-applications/admin-applications.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -53,6 +54,7 @@ const routes: Routes = [
   { path: 'user-details/:id', component: UserDetailsComponent, canActivate: [AuthGuard] },
   { path: 'university-list', component: UniversityListComponent, canActivate: [AuthGuard] },
   { path: 'application-history', component: ApplicationHistoryComponent, canActivate: [AuthGuard] },
+  { path: 'admin-applications', component: AdminApplicationsComponent, canActivate: [AuthGuard] },
   // ML/AI features (stubs - no backend implementation)
   { path: 'segmentation', component: SegmentationComponent, canActivate: [AuthGuard] },
   { path: 'prediction', component: PredictionComponent, canActivate: [AuthGuard] },

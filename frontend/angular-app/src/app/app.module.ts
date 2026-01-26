@@ -37,6 +37,7 @@ import { StarRatingComponent } from './CreateForms/add-university/star-rating.co
 import { ApplicationHistoryComponent } from './application-history/application-history.component';
 import { SegmentationComponent } from './interfaces/segmentation/segmentation.component';
 import { PredictionComponent } from './interfaces/prediction/prediction.component';
+import { AdminApplicationsComponent } from './admin-applications/admin-applications.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +70,8 @@ import { PredictionComponent } from './interfaces/prediction/prediction.componen
   StarRatingReadonlyComponent,
   ApplicationHistoryComponent,
   SegmentationComponent,
-  PredictionComponent
+  PredictionComponent,
+  AdminApplicationsComponent
   ],
   imports: [
     BrowserModule,

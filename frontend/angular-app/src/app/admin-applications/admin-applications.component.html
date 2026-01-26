@@ -1,0 +1,53 @@
+<div class="container mt-4">
+  <h2>All Applications</h2>
+  
+  <div *ngIf="isLoading" class="text-center">
+    <p>Loading applications...</p>
+  </div>
+
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!isLoading && applications.length === 0" class="alert alert-info">
+    No applications found.
+  </div>
+
+  <table *ngIf="!isLoading && applications.length > 0" class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>User ID</th>
+        <th>Program</th>
+        <th>Status</th>
+        <th>Submitted</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let app of applications">
+        <td>{{ app.id }}</td>
+        <td>{{ app.userId }}</td>
+        <td>{{ getFormName(app) }}</td>
+        <td>
+          <span [ngClass]="getStatusBadgeClass(app.status)">{{ app.status }}</span>
+        </td>
+        <td>{{ app.createdAt | date:'short' }}</td>
+        <td>
+          <button 
+            *ngIf="app.status !== 'ACCEPTED'" 
+            class="btn btn-sm btn-success me-2" 
+            (click)="updateStatus(app.id, 'ACCEPTED')">
+            Accept
+          </button>
+          <button 
+            *ngIf="app.status !== 'REFUSED'" 
+            class="btn btn-sm btn-danger" 
+            (click)="updateStatus(app.id, 'REFUSED')">
+            Refuse
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

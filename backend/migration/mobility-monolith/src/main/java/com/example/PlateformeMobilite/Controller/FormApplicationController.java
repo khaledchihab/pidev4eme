@@ -41,5 +41,14 @@ public class FormApplicationController {
         List<FormApplication> userApps = applicationService.getApplicationsByUser(userId);
         return ResponseEntity.ok(userApps);
     }
+
+    // -------------------------------
+    // Get ALL applications (admin)
+    // -------------------------------
+    @GetMapping
+    public ResponseEntity<List<FormApplication>> getAllApplications() {
+        List<FormApplication> allApps = applicationService.getAllApplications();
+        return ResponseEntity.ok(allApps);
+    }
 }
 

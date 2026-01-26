@@ -6,8 +6,6 @@ import { StorageService } from '../_services/storage.service';
 import { switchMap } from 'rxjs/operators';
 import { FormDataDTO } from '../FormDataDTO';
 import { AbstractControl } from '@angular/forms';
-import { AuthUserService } from '../_services/auth-user.service';
-import { UserResponseDTO } from '../dto/UserResponseDTO';
 // Define the FormConfig interface
 interface FormConfig {
   [key: string]: [any, ValidatorFn[]];
@@ -25,33 +23,27 @@ export class DynamicformComponent implements OnInit{
   formFields: any[]=[];
   currentUser: any;
   username: string | null = localStorage.getItem("Username");
-userId!: string;
+  userId!: string;
 
   
 
-constructor(private formBuilder: FormBuilder, private formModelService: DynamicServiceService,  private route: ActivatedRoute, private storageService: StorageService, private userService: AuthUserService ) {
-  this.form = this.formBuilder.group({});
-}
+  constructor(
+    private formBuilder: FormBuilder, 
+    private formModelService: DynamicServiceService,  
+    private route: ActivatedRoute, 
+    private storageService: StorageService
+  ) {
+    this.form = this.formBuilder.group({});
+  }
 
-ngOnInit() {
-  
-  this.currentUser = this.storageService.getUser();
+  ngOnInit() {
+    this.currentUser = this.storageService.getUser();
+    this.userId = this.currentUser.id;
 
-  const formId = this.route.snapshot.params['formId'];
-   const username = localStorage.getItem('Username'); // username from login
-    if (username) {
-      this.userService.getUserByUsername(username).subscribe({
-        next: (user: UserResponseDTO) => {
-          this.userId = user.id;
-          console.log('User ID:', this.userId);
-        },
-        error: (err) => console.error('Error fetching user', err)
-      });
-    }
+    const formId = this.route.snapshot.params['formId'];
 
-
-this.getForms();
-this.formModelService.getFormFieldsByFormId(formId).subscribe((fields) => {
+    this.getForms();
+    this.formModelService.getFormFieldsByFormId(formId).subscribe((fields) => {
   this.formFields = fields;
   
 

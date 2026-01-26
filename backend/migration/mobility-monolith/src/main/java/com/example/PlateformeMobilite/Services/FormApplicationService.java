@@ -29,4 +29,8 @@ public class FormApplicationService {
 
         return applicationRepository.findByUserId(userId);
     }
+
+    public List<FormApplication> getAllApplications() {
+        return applicationRepository.findAll();
+    }
 }
