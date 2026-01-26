@@ -4,7 +4,6 @@ import com.example.PlateformeMobilite.DTO.ApplicationStatus;
 import com.example.PlateformeMobilite.Entity.Form;
 import com.example.PlateformeMobilite.Entity.FormApplication;
 import com.example.PlateformeMobilite.Repository.FormApplicationRepository;
-import javafx.application.Application;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
