@@ -1,0 +1,6 @@
+/* Utility class for main content margin when sidebar is present */
+.with-sidebar-margin {
+	margin-left: 250px; /* Adjust this value to match your sidebar width */
+	transition: margin-left 0.3s;
+}
+/* You can add global styles to this file, and also import other style files */

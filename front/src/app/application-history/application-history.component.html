@@ -1,0 +1,92 @@
+<div class="application-history-container">
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <p>Loading your application history...</p>
+  </div>
+
+  <div *ngIf="!isLoading && applications.length === 0" class="empty-state">
+    <p>📄</p>
+    <h3>No applications found.</h3>
+    <p>It looks like you haven't submitted any forms yet.</p>
+  </div>
+
+  <div *ngIf="!isLoading && applications.length > 0" class="applications-list">
+    <div *ngFor="let app of applications" class="application-card">
+      <div class="card-header">
+        <div class="form-title-group">
+          <h4 class="form-name">{{ app.form.formName }}</h4>
+          <span class="form-id">ID: {{ app.form.formId }}</span>
+        </div>
+        <div class="status-badge" [ngClass]="{
+          'status-pending': app.status === 'PENDING',
+          'status-approved': app.status === 'APPROVED',
+          'status-rejected': app.status === 'REJECTED'
+        }">
+          {{ app.status }}
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Submitted:</span>
+            <span class="info-value" *ngIf="app.createdAt">{{ app.createdAt | date:'short' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Last Updated:</span>
+            <span class="info-value" *ngIf="app.updatedAt">{{ app.updatedAt | date:'short' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">University:</span>
+            <span class="info-value">{{ app.form.university.name }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Location:</span>
+            <span class="info-value">{{ app.form.university.location }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Deadline:</span>
+            <span class="info-value">{{ app.form.datelimite | date:'shortDate' }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Available Places:</span>
+            <span class="info-value">{{ app.form.placesDisp }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-section">
+        <p class="section-title">Description</p>
+        <p class="description-text">{{ app.form.description }}</p>
+      </div>
+
+      <div class="card-section" *ngIf="app.formDataList.length > 0">
+        <p class="section-title">Submitted Data</p>
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Field Name</th>
+                <th>Label</th>
+                <th>Type</th>
+                <th>Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of app.formDataList">
+                <td>{{ data.field.fieldName }}</td>
+                <td>{{ data.field.fieldLabel }}</td>
+                <td>{{ data.field.fieldType }}</td>
+                <td>{{ data.value }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card-section" *ngIf="app.formDataList.length === 0">
+        <p class="no-data-message">No data submitted for this form yet.</p>
+      </div>
+    </div>
+  </div>
+</div>

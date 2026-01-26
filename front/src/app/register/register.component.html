@@ -1,0 +1,45 @@
+<body>
+  <div class="bg">
+      <div class="shape"></div>
+      <div class="shape"></div>
+  </div>
+  <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+      <h3>Create Account <span>Register a new user</span></h3>
+
+      <label for="firstname">First Name</label>
+      <input type="text" placeholder="First Name" ngModel name="firstname" id="firstname" required>
+
+      <label for="lastname">Last Name</label>
+      <input type="text" placeholder="Last Name" ngModel name="lastname" id="lastname" required>
+
+      <label for="placeOfBirth">Place of Birth</label>
+      <input type="text" placeholder="Place of Birth" ngModel name="placeOfBirth" id="placeOfBirth" required>
+
+      <label for="dateOfBirth">Date of Birth</label>
+      <input type="date" ngModel name="dateOfBirth" id="dateOfBirth" required>
+
+      <label for="nationality">Nationality</label>
+      <input type="text" placeholder="Nationality" ngModel name="nationality" id="nationality" required>
+
+      <label for="gender">Gender</label>
+      <select ngModel name="gender" id="gender" required>
+        <option [ngValue]="'MALE'">Male</option>
+        <option [ngValue]="'FEMALE'">Female</option>
+      </select>
+
+      <label for="cin">CIN</label>
+      <input type="text" placeholder="CIN" ngModel name="cin" id="cin" required>
+
+      <label for="email">Email</label>
+      <input type="email" placeholder="Email" ngModel name="email" id="email" required>
+
+      <label for="username">Username</label>
+      <input type="text" placeholder="Username" ngModel name="username" id="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" placeholder="Password" ngModel name="password" id="password" required>
+
+      <button type="submit" value="Register">Register</button>
+      
+  </form>
+</body>

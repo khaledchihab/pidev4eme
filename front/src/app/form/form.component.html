@@ -1,0 +1,192 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <form (ngSubmit)="onSubmit(formData)" #uploadForm="ngForm">
+        <div>
+          <div class="nice-form-group">
+            <label>nom et prenom</label>
+            <input
+              type="text"
+              placeholder="Your name"
+              name="nom"
+              required
+              [(ngModel)]="formData.nom"
+            />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Your email"
+              value=""
+              class="icon-right"
+              required
+              name="email"
+              [(ngModel)]="formData.email"
+            />
+          </div>
+
+          <fieldset class="nice-form-group">
+            <legend>Genre</legend>
+            <div class="nice-form-group">
+              <input
+                type="radio"
+                name="genre"
+                id="masculin"
+                value="masculin"
+                [(ngModel)]="formData.genre"
+              />
+              <label for="masculin">masculin</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input
+                type="radio"
+                name="genre"
+                id="feminin"
+                value="feminin"
+                [(ngModel)]="formData.genre"
+              />
+              <label for="feminin">feminin</label>
+            </div>
+          </fieldset>
+
+          <div class="nice-form-group">
+            <label>Date de naissance</label>
+            <input
+              type="date"
+              value="2018-07-22"
+              name="daten"
+              required
+              [(ngModel)]="formData.daten"
+            />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Identifiant unique esprit</label>
+            <small>par exemple 203JMT4081</small>
+            <input
+              type="text"
+              placeholder="id unique"
+              name="idesprit"
+              required
+              [(ngModel)]="formData.idesprit"
+            />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Classe actuelle</label>
+            <small>exemple :4 TWIN 2, 4 OGI 1</small>
+            <input
+              type="text"
+              placeholder="classe"
+              required
+              name="classe"
+              [(ngModel)]="formData.classe"
+            />
+          </div>
+
+          <fieldset class="nice-form-group">
+            <legend>Département</legend>
+            <div class="nice-form-group">
+              <input
+                type="radio"
+                name="departement"
+                id="TIC"
+                value="TIC"
+                [(ngModel)]="formData.departement"
+              />
+              <label for="TIC">TIC (Informatique & Télécom)</label>
+            </div>
+
+            <div class="nice-form-group">
+              <input
+                type="radio"
+                name="departement"
+                id="EM"
+                value="EM"
+                [(ngModel)]="formData.departement"
+              />
+              <label for="EM">EM</label>
+            </div>
+          </fieldset>
+
+          <div class="nice-form-group">
+            <label>Moyenne générale obtenue en 3ème (session principale)</label>
+            <small>obligatoirement à ESPRIT</small>
+            <input
+              type="text"
+              placeholder="Moyenne 3éme"
+              name="moy3"
+              required
+              [(ngModel)]="formData.moy3"
+            />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Moyenne générale obtenue en 2ème (session principale)</label>
+            <small>à ESPRIT ou ailleurs</small>
+            <input
+              type="text"
+              placeholder="Moyenne 2éme"
+              name="moy2"
+              required
+              [(ngModel)]="formData.moy2"
+            />
+          </div>
+
+          <div class="nice-form-group">
+            <label>Moyenne générale obtenue en 1ère (session principale)</label>
+            <small>à ESPRIT ou ailleurs</small>
+            <input
+              type="text"
+              placeholder="Moyenne 1ére"
+              name="moy1"
+              required
+              [(ngModel)]="formData.moy1"
+            />
+          </div>
+
+          <div class="nice-form-group">
+            <label>mon niveau en anglais</label>
+            <select
+              [(ngModel)]="formData.anglais"
+              name="anglais"
+              id="anglais"
+              required
+            >
+              <option>A1</option>
+              <option>A2</option>
+              <option>B1</option>
+              <option>B2</option>
+              <option>C1</option>
+              <option>C2</option>
+              <option>Je ne sais pas</option>
+            </select>
+          </div>
+
+          <div class="nice-form-group">
+            <label
+              >Je dépose TOUS les documents qui appuient ma candidature (relevés
+              de notes, certifications, attestations, ...) en un SEUL document
+              PDF</label
+            >
+            <input
+              type="file"
+              id="pdfFile"
+              name="pdfFile"
+              (change)="onFileSelected($event)"
+              accept=".pdf"
+              [(ngModel)]="formData.pdfFile"
+            />
+          </div>
+          <div class="btn-container">
+            <input class="btn btn-primary" type="submit" value="Submit" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

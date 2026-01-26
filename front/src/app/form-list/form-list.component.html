@@ -1,0 +1,55 @@
+
+<div class="user-list-container">
+  <h2 class="list-title">Liste des formulaires <span><i class="ri-file-list-2-line"></i></span></h2>
+  <div class="d-flex justify-content-end mb-3">
+    <button class="btn btn-primary" (click)="addForm()">
+      <i class="ri-add-line"></i> Ajouter un formulaire
+    </button>
+  </div>
+  <div *ngIf="loading" class="d-flex justify-content-center align-items-center" style="height: 200px;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+  <div *ngIf="dataSource.data.length === 0 && !loading" class="alert alert-info text-center">
+    Aucun formulaire trouvé. Cliquez sur "Ajouter un formulaire" pour commencer.
+  </div>
+  <div class="table-card shadow-lg" *ngIf="dataSource.data.length > 0">
+    <div class="table-responsive">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th class="header-cell">ID</th>
+            <th class="header-cell">Nom</th>
+            <th class="header-cell">Université</th>
+            <th class="header-cell">Places</th>
+            <th class="header-cell">Date limite</th>
+            <th class="header-cell text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let form of dataSource.data" class="user-row">
+            <td class="data-cell">{{ form.formId }}</td>
+            <td class="data-cell">{{ form.formName }}</td>
+            <td class="data-cell">{{ form.university?.name }}</td>
+            <td class="data-cell">{{ form.placesDisp }}</td>
+            <td class="data-cell">{{ form.datelimite | date: 'yyyy-MM-dd' }}</td>
+            <td class="data-cell text-center">
+              <button class="action-button tooltip-container btn btn-link p-0 me-2" (click)="updateForm(form.formId)" title="Modifier">
+                <i class="ri-pencil-line action-icon"></i>
+                <span class="tooltip-text">Modifier</span>
+              </button>
+              <button class="action-button tooltip-container btn btn-link p-0" (click)="deleteForm(form.formId)" title="Supprimer">
+                <i class="ri-delete-bin-line action-icon"></i>
+                <span class="tooltip-text">Supprimer</span>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="error" class="alert alert-danger mt-3">
+    {{ error }}
+  </div>
+</div>

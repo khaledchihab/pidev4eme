@@ -1,0 +1,51 @@
+<div class="user-list-container">
+  <h2 class="list-title">
+    Liste des universités <span><i class="ri-building-2-line"></i></span>
+  </h2>
+
+  <div class="table-card shadow-lg">
+    <div class="table-responsive">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th class="header-cell">Nom</th>
+            <th class="header-cell">Localisation</th>
+            <th class="header-cell">Note</th>
+            <th class="header-cell">Formulaires</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let university of universities" class="user-row">
+            <td class="data-cell">{{ university.name }}</td>
+            <td class="data-cell">{{ university.location }}</td>
+            <td class="data-cell">
+              <app-star-rating 
+                [rating]="university.avgRating || 0"
+                (ratingClick)="onRate(university, $event)">
+              </app-star-rating>
+              <small *ngIf="university.avgRating">
+                ({{ university.avgRating | number:'1.1-1' }}/5)
+              </small>
+            </td>
+            <td class="data-cell">
+              <ul *ngIf="university.forms && university.forms.length > 0">
+                <li *ngFor="let form of university.forms">
+                  {{ form.formName }} (Places: {{ form.placesDisp }})
+                </li>
+              </ul>
+              <span *ngIf="!university.forms || university.forms.length === 0">
+                Aucun formulaire
+              </span>
+            </td>
+          </tr>
+
+          <tr *ngIf="!universities || universities.length === 0">
+            <td class="no-data-row" [attr.colspan]="4">
+              Aucune université trouvée.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

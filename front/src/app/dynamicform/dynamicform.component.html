@@ -1,0 +1,90 @@
+
+  <div class="content-wrapper" style="min-height: 500.6px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Add Form Data </h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Form Data</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- left column -->
+          <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Please fill this form with accurate information</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form [formGroup]="form" (ngSubmit)="onSubmit()" id="quickForm">
+                <div class="card-body">
+                  <div *ngFor="let field of formFields" class="form-group">
+                    <label [class.col-form-label]="true"
+                          [class.text-success]="form.get(field.fieldName)?.valid && form.get(field.fieldName)?.value !== ''"
+                          [class.text-danger]="form.get(field.fieldName)?.invalid && form.get(field.fieldName)?.value !== ''"
+                          [for]="sanitizeLabel(field.fieldLabel)">
+                      <i [class]="getIconClass(field.fieldName)"></i>{{ field.fieldLabel }}
+                    </label>
+                    <input [type]="field.fieldType"
+                          [formControlName]="field.fieldName"
+                          [id]="sanitizeLabel(field.fieldLabel)"
+                          class="form-control"
+                          [class.is-valid]="form.get(field.fieldName)?.valid">
+                    <!-- Display validation errors for each field -->
+                    <div *ngIf="form.get(field.fieldName)?.invalid && form.get(field.fieldName)?.touched">
+                      <div *ngIf="form.get(field.fieldName)?.invalid && form.get(field.fieldName)?.touched">
+                        <div *ngIf="form.get(field.fieldName)?.hasError('required')">
+                          Field is required.
+                        </div>
+                        <div *ngIf="form.get(field.fieldName)?.hasError('email')">
+                          Please enter a valid email address.
+                        </div>
+                        <div *ngIf="form.get(field.fieldName)?.hasError('pattern')">
+                          Please enter a numeric value.
+                        </div>
+                        <div *ngIf="form.get(field.fieldName)?.hasError('scoreOutOfRange')">
+                          Score must be a number between 0 and 20.
+                        </div>
+                        <!-- Add more validation messages as needed -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.card-body -->
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+              
+            </div>
+            <!-- /.card -->
+
+            <!-- general form elements -->
+            
+          
+
+            
+            
+
+          </div>
+        
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>

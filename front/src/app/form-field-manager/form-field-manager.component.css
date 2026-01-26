@@ -1,0 +1,80 @@
+/* General body and container styles */
+body {
+  background-color: #f0f2f5;
+  font-family: 'Inter', sans-serif;
+}
+
+.with-sidebar-margin {
+  padding-left: 250px;
+}
+
+/* Card and form styles */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 1rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-title {
+  font-weight: 700;
+  color: #3f51b5;
+}
+
+/* Form input styles */
+.form-floating .form-control,
+.form-floating .form-select {
+  border-radius: 0.75rem;
+  border: 1px solid #dee2e6;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-floating .form-control:focus,
+.form-floating .form-select:focus {
+  border-color: #3f51b5;
+  box-shadow: 0 0 0 0.25rem rgba(63, 81, 181, 0.25);
+}
+
+/* Button styles */
+.btn-primary {
+  background-color: #3f51b5;
+  border-color: #3f51b5;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #33428c;
+  border-color: #33428c;
+  transform: translateY(-2px);
+}
+
+.btn-outline-danger {
+  color: #d9534f;
+  border-color: #d9534f;
+  transition: all 0.2s ease;
+}
+
+.btn-outline-danger:hover {
+  color: #fff;
+  background-color: #d9534f;
+}
+
+/* Table styles */
+.table th,
+.table td {
+  border: none;
+}
+
+.table thead {
+  background-color: #e9ecef;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #eef1f6;
+  transition: background-color 0.2s ease;
+}

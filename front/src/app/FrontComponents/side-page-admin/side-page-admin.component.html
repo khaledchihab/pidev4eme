@@ -1,0 +1,85 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a href="https://esprit.tn/" class="brand-link">
+    <img src="assets/img/esprit_logo.jpg" alt="ESPRIT"
+         class="brand-image img-circle elevation-3" style="opacity: .8">
+    <span class="brand-text font-weight-light">ESPRIT</span>
+  </a>
+
+  <div class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img src="assets/dist/img/user2-160x160.jpg"
+             class="img-circle elevation-2" alt="User Image">
+      </div>
+      <div class="info">
+        <a routerLink="/profile" class="d-block">Profile</a>
+      </div>
+    </div>
+
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" role="menu">
+        <li class="nav-header">Navigation</li>
+
+        <!-- Visible only for SUPER_ADMIN -->
+        <ng-container *ngIf="isSuperAdmin">
+          <li class="nav-item">
+            <a routerLink="/form-list" class="nav-link">
+              <i class="fas fa-list nav-icon"></i>
+              <p>List of Forms</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/addForm" class="nav-link">
+              <i class="fas fa-plus nav-icon"></i>
+              <p>Add Form</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/addUni" class="nav-link">
+              <i class="fas fa-university nav-icon"></i>
+              <p>Add University</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/users-list" class="nav-link">
+              <i class="fas fa-users nav-icon"></i>
+              <p>Users List</p>
+            </a>
+          </li>
+        </ng-container>
+
+        <!-- Visible only for STUDENT -->
+        <ng-container *ngIf="isStudent">
+          <li class="nav-item">
+            <a routerLink="/university-list" class="nav-link">
+              <i class="fas fa-building nav-icon"></i>
+              <p>University List</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/offres" class="nav-link">
+              <i class="fas fa-briefcase nav-icon"></i>
+              <p>Offres</p>
+            </a>
+          </li>
+                  <li class="nav-item">
+<a routerLink="/prediction" class="nav-link">
+  <i class="fas fa-chart-line nav-icon"></i>
+  <p>Prediction Mobility</p>
+</a>
+
+
+  <li class="nav-item">
+  <a routerLink="/segmentation" class="nav-link">
+    <i class="fas fa-user-graduate nav-icon"></i>
+    <p>Student Segmentation</p>
+  </a>
+</li>
+
+        </ng-container>
+      </ul>
+    </nav>
+  </div>
+</aside>

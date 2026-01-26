@@ -1,0 +1,49 @@
+<div class="main-content">
+  <div class="dashboard-header">
+    <h1>All Form Applications</h1>
+    <div class="search-bar">
+      <input type="text" placeholder="Search applications..." class="form-control" />
+      <button class="btn search-btn">
+        <i class="fas fa-search"></i>
+      </button>
+    </div>
+  </div>
+
+  <div *ngFor="let app of applications" class="app-card">
+    <div class="card-header">
+      <div class="header-left">
+        <h2 class="form-title">
+          <a [routerLink]="['/form-details', app.form.formName]">{{ app.form.formName }}</a>
+        </h2>
+        <p class="user-info">Submitted by: <span>{{ userDataMap[app.userId]?.email }}</span></p>
+      </div>
+
+      <div class="header-right">
+        <div class="status-badge" [ngClass]="{
+          'status-pending': app.status === 'PENDING',
+          'status-approved': app.status === 'APPROVED',
+          'status-rejected': app.status === 'REJECTED'
+        }">
+          {{ app.status }}
+        </div>
+        <div class="actions">
+          <button class="btn approve-btn" (click)="updateStatus(app.applicationId, 'APPROVED')">
+            Approve
+          </button>
+          <button class="btn reject-btn" (click)="updateStatus(app.applicationId, 'REJECTED')">
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="data-list">
+        <div *ngFor="let data of app.formDataList" class="data-item">
+          <div class="field-label">{{ data.field.fieldLabel }}:</div>
+          <div class="field-value">{{ data.value }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

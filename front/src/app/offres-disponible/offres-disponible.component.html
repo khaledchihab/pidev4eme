@@ -1,0 +1,50 @@
+<div class="page-container">
+
+  <header class="page-header">
+    <div class="page-header-content">
+      <h1 class="page-title">Offres de mobilité Esprit</h1>
+      <p class="page-subtitle">Découvrez les opportunités de mobilité à l'international.</p>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="card-grid-container">
+
+      <div 
+        class="form-card" 
+        *ngFor="let form of forms" 
+        (click)="redirectToDynamicForm(form.formId)">
+        
+        <div class="card-header">
+          <h2 class="card-title">{{ form.formName }}</h2>
+          <p class="card-university">{{ form.university.name }}</p>
+        </div>
+
+        <div class="card-body">
+          <p class="card-description">{{ form.description }}</p>
+
+          <div class="card-info">
+            <div class="info-item">
+              <i class="ri-calendar-line"></i>
+              <span>{{ form.datelimite | date }}</span>
+            </div>
+            <div class="info-item">
+              <i class="ri-group-line"></i>
+              <span>{{ form.placesDisp }} places</span>
+            </div>
+            <div class="info-item">
+              <i class="ri-star-fill"></i>
+              <app-star-rating-readonly [rating]="form.avgRating || 0"></app-star-rating-readonly>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button class="apply-button">Postuler</button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>

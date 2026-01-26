@@ -1,0 +1,21 @@
+<body>
+  <div class="bg">
+      <div class="shape"></div>
+      <div class="shape"></div>
+  </div>
+  <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <h3>Welcome Back! <span>Login to your account</span></h3>
+
+      <label for="username">Username</label>
+      <input type="text" placeholder="id esprit" ngModel
+      name="username"
+      id="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" placeholder="secret key" ngModel
+      name="password"
+      id="password" required>
+
+      <button type="submit" value="Login">Sign in</button>
+  </form>
+</body>

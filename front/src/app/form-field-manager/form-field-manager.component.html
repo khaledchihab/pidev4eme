@@ -1,0 +1,68 @@
+<div class="with-sidebar-margin">
+<div class="container mt-4">
+  <h3>Manage Form Fields</h3>
+
+  <!-- Add New Field Form -->
+  <form (ngSubmit)="addField()" class="border p-3 rounded mb-4 bg-light">
+
+    <div class="mb-3">
+      <label class="form-label">Field Name</label>
+      <input [(ngModel)]="newField.fieldName" name="fieldName" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Field Label</label>
+      <input [(ngModel)]="newField.fieldLabel" name="fieldLabel" class="form-control" required>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Field Type</label>
+      <select [(ngModel)]="newField.fieldType" name="fieldType" class="form-select" required>
+        <option *ngFor="let type of fieldTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <!-- Show config only if needed -->
+    <div class="mb-3" *ngIf="newField.fieldType === 'select' || newField.fieldType === 'radio'">
+      <label class="form-label">Configuration (comma-separated options)</label>
+      <input [(ngModel)]="newField.configuration" name="configuration" class="form-control" placeholder="e.g. Option1,Option2,Option3">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Coefficient</label>
+      <input type="number" [(ngModel)]="newField.coefficient" name="coefficient" class="form-control">
+    </div>
+
+    <button class="btn btn-primary" type="submit">Add Field</button>
+  </form>
+
+  <!-- List of Fields -->
+  <div>
+    <h5>Existing Fields</h5>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Label</th>
+          <th>Type</th>
+          <th>Configuration</th>
+          <th>Coefficient</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let f of fields">
+          <td>{{ f.fieldName }}</td>
+          <td>{{ f.fieldLabel }}</td>
+          <td>{{ f.fieldType }}</td>
+          <td>{{ f.configuration }}</td>
+          <td>{{ f.coefficient }}</td>
+          <td>
+            <button class="btn btn-sm btn-danger" (click)="deleteField(f.fieldId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
