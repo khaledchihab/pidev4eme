@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-const AUTH_API = 'http://localhost:8888/api/auth/';
+import { LoginRequestDTO } from '../dto/LoginRequestDTO';
+import { LoginResponseDTO } from '../dto/LoginResponseDTO';
+import { UserRequestDTO } from '../dto/UserRequestDTO';
+
+const AUTH_API = 'http://localhost:8888/mobility/authentication/';
+const USER_API = 'http://localhost:8888/mobility/users/';
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
@@ -22,11 +26,11 @@ export class UserAuthService {
 
 
   public setToken(jwtToken: string) {
-    localStorage.setItem('jwtToken', jwtToken);
+    localStorage.setItem('Token', jwtToken);
   }
 
   public getToken(): string {
-    return (localStorage.getItem('Token') ?? '[]');
+    return (localStorage.getItem('Token') ?? '');
   }
 
   public Clear() {
@@ -38,38 +42,18 @@ export class UserAuthService {
   }
 
   /**
-   * Login method - calls monolith /api/auth/signin
-   * Maps backend response (token) to frontend format (jwt)
+   * Login method - calls auth-service /mobility/authentication/login
    */
-  public login(credentials: any): Observable<any> {
-    return this.http.post(AUTH_API + 'signin', {
-      username: credentials.username,
-      password: credentials.password
-    }, httpOptions).pipe(
-      map((response: any) => {
-        // Map monolith response format to frontend DTO format
-        return {
-          jwt: response.token,  // Backend uses 'token', frontend expects 'jwt'
-          username: response.username,
-          roles: response.roles,
-          id: response.id,
-          code: response.code
-        };
-      })
-    );
+  public login(credentials: LoginRequestDTO): Observable<LoginResponseDTO> {
+    return this.http.post<LoginResponseDTO>(AUTH_API + 'login', credentials, httpOptions);
   }
 
   /**
-   * Register method - calls monolith /api/auth/signup
+   * Register method - calls auth-service /mobility/users/create
    */
-  public register(userData: any): Observable<any> {
-    return this.http.post(AUTH_API + 'signup', {
-      username: userData.username,
-      email: userData.email,
-      password: userData.password,
-      role: ['candidat']  // Default role for student registration
-    }, httpOptions);
+  public register(userData: UserRequestDTO): Observable<any> {
+    return this.http.post(USER_API + 'create', userData, httpOptions);
   }
 
-
 }
+
