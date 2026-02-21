@@ -16,10 +16,15 @@ public class NotificationService {
         this.notificationRestClient = notificationRestClient;
     }
 
-
     @Async
     public void send(String to, String subject, String body) {
-        NotificationRequestDTO dto = new NotificationRequestDTO(to, subject, body);
-        notificationRestClient.sendNotification(dto);
+        try {
+            NotificationRequestDTO dto = new NotificationRequestDTO(to, subject, body);
+            notificationRestClient.sendNotification(dto);
+            log.info("Notification sent to {}", to);
+        } catch (Exception e) {
+            log.warn("Failed to send notification to {} (NOTIFICATION-SERVICE may be unavailable): {}", to,
+                    e.getMessage());
+        }
     }
 }
