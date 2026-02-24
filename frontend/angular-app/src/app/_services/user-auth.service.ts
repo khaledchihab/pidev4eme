@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
+import { retryWhen, mergeMap, throwError } from 'rxjs';
 import { LoginRequestDTO } from '../dto/LoginRequestDTO';
 import { LoginResponseDTO } from '../dto/LoginResponseDTO';
 import { UserRequestDTO } from '../dto/UserRequestDTO';
@@ -17,13 +18,14 @@ const httpOptions = {
 export class UserAuthService {
 
   constructor(private http: HttpClient) { }
-  public setRoles(roles: []) {
+
+  public setRoles(roles: string[]) {
     localStorage.setItem('roles', JSON.stringify(roles));
   }
+
   public getRoles(): string[] {
     return JSON.parse(localStorage.getItem('roles') ?? '[]');
   }
-
 
   public setToken(jwtToken: string) {
     localStorage.setItem('Token', jwtToken);
@@ -33,19 +35,51 @@ export class UserAuthService {
     return (localStorage.getItem('Token') ?? '');
   }
 
-  public Clear() {
-    localStorage.clear();
+  public clear() {
+    localStorage.removeItem('Token');
+    localStorage.removeItem('User');
+    localStorage.removeItem('roles');
+    localStorage.removeItem('Username');
   }
 
-  public isLoggedIn() {
-    return this.getRoles() && this.getToken();
+  public isLoggedIn(): boolean {
+    return !!this.getToken();
   }
 
   /**
-   * Login method - calls auth-service /mobility/authentication/login
+   * Check if the stored token is still valid (not expired).
+   */
+  public isTokenValid(): boolean {
+    const token = this.getToken();
+    if (!token) return false;
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const expiry = payload.exp * 1000; // JWT exp is in seconds
+      return Date.now() < expiry;
+    } catch {
+      return false;
+    }
+  }
+
+  /**
+   * Login with automatic retry (3 attempts, 2s delay between retries).
+   * If auth-service is temporarily down, retries give it time to recover.
    */
   public login(credentials: LoginRequestDTO): Observable<LoginResponseDTO> {
-    return this.http.post<LoginResponseDTO>(AUTH_API + 'login', credentials, httpOptions);
+    return this.http.post<LoginResponseDTO>(AUTH_API + 'login', credentials, httpOptions).pipe(
+      retryWhen((errors: Observable<any>) =>
+        errors.pipe(
+          mergeMap((error: any, attempt: number) => {
+            // Only retry on server/network errors (5xx, 0 = network error), not on 4xx
+            if (attempt >= 2 || (error.status >= 400 && error.status < 500)) {
+              return throwError(() => error);
+            }
+            console.warn(`Login attempt ${attempt + 1} failed, retrying in 2s...`);
+            return timer(2000);
+          })
+        )
+      )
+    );
   }
 
   /**
@@ -54,6 +88,4 @@ export class UserAuthService {
   public register(userData: UserRequestDTO): Observable<any> {
     return this.http.post(USER_API + 'create', userData, httpOptions);
   }
-
 }
-
