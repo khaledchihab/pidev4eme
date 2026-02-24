@@ -400,19 +400,8 @@ curl -X POST http://localhost:8888/mobility/authentication/login \
 # 5. Use the returned JWT to hit the monolith
 curl http://localhost:8888/getUniversities \
   -H "Authorization: Bearer <PASTE_JWT_HERE>"
+
 ```
-
----
-
-## 👥 Team
-
-**ESPRIT — Projet Intégré 4ème Année**
-
-| Member | Role |
-|--------|------|
-| Khaled Chihab | Full-Stack Developer |
-
----
 
 ## 📄 License
 
