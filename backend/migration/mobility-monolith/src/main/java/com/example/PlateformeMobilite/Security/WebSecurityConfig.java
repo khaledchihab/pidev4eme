@@ -1,6 +1,5 @@
 package com.example.PlateformeMobilite.Security;
 
-
 import com.example.PlateformeMobilite.Security.Services.UserDetailsServiceImpl;
 import com.example.PlateformeMobilite.Security.jwt.AuthEntryPointJwt;
 import com.example.PlateformeMobilite.Security.jwt.AuthTokenFilter;
@@ -13,28 +12,22 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(
-         securedEnabled = true,
-         jsr250Enabled = true,
-        prePostEnabled = true)
-
+@EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 @AllArgsConstructor
 @Getter
 @Setter
-public class WebSecurityConfig  {
+public class WebSecurityConfig {
 
     @Autowired
     UserDetailsServiceImpl userDetailsServiceImpl;
@@ -50,10 +43,8 @@ public class WebSecurityConfig  {
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-
         authProvider.setUserDetailsService(userDetailsServiceImpl);
         authProvider.setPasswordEncoder(passwordEncoder());
-
         return authProvider;
     }
 
@@ -72,28 +63,17 @@ public class WebSecurityConfig  {
         http.csrf(csrf -> csrf.disable())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers(
-                                        new AntPathRequestMatcher("/api/auth/**"),
-                                        new AntPathRequestMatcher("/register")
-                                ).permitAll()
-                                .requestMatchers(
-                                        new AntPathRequestMatcher("/api/test/**")
-
-                                ).permitAll()
-                                .requestMatchers(
-                                        new AntPathRequestMatcher("/**")
-
-                                ).permitAll()
-                                .antMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                                .anyRequest().authenticated()
-                );
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/api/test/**").permitAll()
+                        .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
+                        .anyRequest().permitAll());
 
         http.authenticationProvider(authenticationProvider());
-
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 }
-

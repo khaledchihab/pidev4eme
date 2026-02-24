@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +22,7 @@ public class FormApplication implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long applicationId;
 
-    private String userId;  // comes from your other microservice
+    private String userId; // comes from your other microservice
 
     @ManyToOne
     private Form form;
@@ -33,7 +33,7 @@ public class FormApplication implements Serializable {
     @OneToMany(mappedBy = "application", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
 
-    private List<FormData> formDataList ;
+    private List<FormData> formDataList;
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

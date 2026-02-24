@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -18,12 +18,10 @@ public class FormData implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dataId;
 
+    // @ManyToOne
+    // private Form form;
 
-   // @ManyToOne
-   // private Form form;
-
-
-   private String userId;
+    private String userId;
     @ManyToOne
     private FormField field;
 
@@ -33,11 +31,10 @@ public class FormData implements Serializable {
     @JsonBackReference
     private FormApplication application; // link to the whole application
 
-    public FormData( String userId, FormField field, String value) {
+    public FormData(String userId, FormField field, String value) {
         this.userId = userId;
         this.field = field;
         this.value = value;
     }
-
 
 }

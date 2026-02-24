@@ -3,7 +3,7 @@ package com.example.PlateformeMobilite.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -27,8 +27,7 @@ public class Form implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER)
 
-    private List <FormField> formFields;
-
+    private List<FormField> formFields;
 
     private String formName;
     private String description;
@@ -36,6 +35,5 @@ public class Form implements Serializable {
 
     private String equation;
     private Date datelimite;
-
 
 }

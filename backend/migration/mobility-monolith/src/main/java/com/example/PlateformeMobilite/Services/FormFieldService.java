@@ -9,14 +9,16 @@ import com.example.PlateformeMobilite.Repository.FormRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class FormFieldService implements IFormFieldService {
 
     private final FormFieldRepository formFieldRepository;
     private final FormRepository formRepository;
+
     @Override
     public List<FormField> retrieveAllFormFields() {
         return formFieldRepository.findAll();
@@ -33,13 +35,13 @@ public class FormFieldService implements IFormFieldService {
     }
 
     @Override
-    public FormField updateFormField(Long id,FormField f) {
+    public FormField updateFormField(Long id, FormField f) {
         return formFieldRepository.findById(id)
-                .map(p->{
+                .map(p -> {
                     p.setFieldType(f.getFieldType());
                     p.setFieldName((f.getFieldName()));
                     return formFieldRepository.save(f);
-                }).orElseThrow(()-> new RuntimeException("Form not found!"));
+                }).orElseThrow(() -> new RuntimeException("Form not found!"));
     }
 
     @Override
@@ -47,6 +49,7 @@ public class FormFieldService implements IFormFieldService {
         formFieldRepository.deleteById(FormFieldId);
 
     }
+
     public FormField createFormField(FormFieldDTO request) {
         Form form = formRepository.findById(request.getFormId())
                 .orElseThrow(() -> new EntityNotFoundException("Form not found"));
@@ -69,6 +72,7 @@ public class FormFieldService implements IFormFieldService {
     public void deleteFormField(Long fieldId) {
         formFieldRepository.deleteById(fieldId);
     }
+
     @Override
     public List<FormField> getFormFieldsByFormId(Long formId) {
         return formFieldRepository.findByForm_FormId(formId);

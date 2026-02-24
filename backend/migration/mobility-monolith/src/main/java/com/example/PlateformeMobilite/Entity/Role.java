@@ -2,7 +2,7 @@ package com.example.PlateformeMobilite.Entity;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 
-public class  Role implements Serializable {
+public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,10 +44,12 @@ public class  Role implements Serializable {
     public void setName(ERole name) {
         this.name = name;
     }
-    /*@Override
-    public String toString() {
-        return this.role;
-    }*/
-//    @ManyToMany (mappedBy = "roles")
-//    private List<User> user;
+    /*
+     * @Override
+     * public String toString() {
+     * return this.role;
+     * }
+     */
+    // @ManyToMany (mappedBy = "roles")
+    // private List<User> user;
 }

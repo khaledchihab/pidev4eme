@@ -2,7 +2,7 @@ package com.example.PlateformeMobilite.Entity;
 
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,11 +23,9 @@ public class FormField implements Serializable {
 
     private String fieldName;
     private String fieldLabel;
-    private String fieldType;/* my own HTML type  selon this will take the input type with switch case*/
+    private String fieldType;/* my own HTML type selon this will take the input type with switch case */
     private String configuration;
 
     private int coefficient;
-
-
 
 }
