@@ -1,6 +1,5 @@
 package com.example.PlateformeMobilite.Controller;
 
-import com.example.PlateformeMobilite.Entity.Form;
 import com.example.PlateformeMobilite.Interfaces.IEmailService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,12 +1,10 @@
 package com.example.PlateformeMobilite.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -33,6 +31,7 @@ public class User implements Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY) // EAGER
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Builder.Default
     private Set<Role> roles = new HashSet<>();
 
     public User(String username, String email, String password) {

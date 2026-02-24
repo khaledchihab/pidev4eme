@@ -1,7 +1,7 @@
 import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject, timer, throwError } from 'rxjs';
-import { tap, retryWhen, mergeMap } from 'rxjs/operators';
+import { tap, retry } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
 import { UserRequestDTO } from '../dto/UserRequestDTO';
 import { UserResponseDTO } from '../dto/UserResponseDTO';
@@ -36,20 +36,20 @@ export class AuthUserService {
 
   /**
    * Login with automatic retry (3 attempts, 2s delay between retries).
+   * Uses modern retry() API — NOT deprecated retryWhen().
    */
   login(loginData: LoginRequestDTO): Observable<LoginResponseDTO> {
     return this.http.post<LoginResponseDTO>(`${BASE_URL}/login`, loginData).pipe(
-      retryWhen((errors: Observable<any>) =>
-        errors.pipe(
-          mergeMap((error: any, attempt: number) => {
-            if (attempt >= 2 || (error.status >= 400 && error.status < 500)) {
-              return throwError(() => error);
-            }
-            console.warn(`Login attempt ${attempt + 1} failed, retrying in 2s...`);
-            return timer(2000);
-          })
-        )
-      ),
+      retry({
+        count: 2,
+        delay: (error: any, retryCount: number) => {
+          if (error.status >= 400 && error.status < 500) {
+            return throwError(() => error);
+          }
+          console.warn(`Login attempt ${retryCount} failed, retrying in 2s...`);
+          return timer(2000);
+        }
+      }),
       tap((response: LoginResponseDTO) => {
         if (isPlatformBrowser(this.platformId)) {
           localStorage.setItem('Token', response.jwt);
@@ -60,6 +60,7 @@ export class AuthUserService {
       })
     );
   }
+
 
 
   logout(): void {

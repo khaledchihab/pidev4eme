@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, timer } from 'rxjs';
-import { retryWhen, mergeMap, throwError } from 'rxjs';
+import { Observable, timer, throwError } from 'rxjs';
+import { retry } from 'rxjs/operators';
 import { LoginRequestDTO } from '../dto/LoginRequestDTO';
 import { LoginResponseDTO } from '../dto/LoginResponseDTO';
 import { UserRequestDTO } from '../dto/UserRequestDTO';
@@ -19,7 +19,7 @@ export class UserAuthService {
 
   constructor(private http: HttpClient) { }
 
-  public setRoles(roles: string[]) {
+  public setRoles(roles: string[]): void {
     localStorage.setItem('roles', JSON.stringify(roles));
   }
 
@@ -27,7 +27,7 @@ export class UserAuthService {
     return JSON.parse(localStorage.getItem('roles') ?? '[]');
   }
 
-  public setToken(jwtToken: string) {
+  public setToken(jwtToken: string): void {
     localStorage.setItem('Token', jwtToken);
   }
 
@@ -35,7 +35,7 @@ export class UserAuthService {
     return (localStorage.getItem('Token') ?? '');
   }
 
-  public clear() {
+  public clear(): void {
     localStorage.removeItem('Token');
     localStorage.removeItem('User');
     localStorage.removeItem('roles');
@@ -63,22 +63,21 @@ export class UserAuthService {
 
   /**
    * Login with automatic retry (3 attempts, 2s delay between retries).
-   * If auth-service is temporarily down, retries give it time to recover.
+   * Uses modern retry() API — NOT deprecated retryWhen().
    */
   public login(credentials: LoginRequestDTO): Observable<LoginResponseDTO> {
     return this.http.post<LoginResponseDTO>(AUTH_API + 'login', credentials, httpOptions).pipe(
-      retryWhen((errors: Observable<any>) =>
-        errors.pipe(
-          mergeMap((error: any, attempt: number) => {
-            // Only retry on server/network errors (5xx, 0 = network error), not on 4xx
-            if (attempt >= 2 || (error.status >= 400 && error.status < 500)) {
-              return throwError(() => error);
-            }
-            console.warn(`Login attempt ${attempt + 1} failed, retrying in 2s...`);
-            return timer(2000);
-          })
-        )
-      )
+      retry({
+        count: 2,
+        delay: (error: any, retryCount: number) => {
+          // Only retry on server/network errors (5xx, 0 = network), not on 4xx (auth errors)
+          if (error.status >= 400 && error.status < 500) {
+            return throwError(() => error);
+          }
+          console.warn(`Login attempt ${retryCount} failed, retrying in 2s...`);
+          return timer(2000);
+        }
+      })
     );
   }
 
