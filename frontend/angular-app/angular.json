@@ -28,29 +28,39 @@
               "src/styles.css",
               "node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
-              "node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
-              "node_modules/admin-lte/dist/css/adminlte.min.css"
+              "src/assets/plugins/fontawesome-free/css/all.min.css",
+              "src/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
-              "node_modules/admin-lte/dist/js/adminlte.js"
+              "src/assets/plugins/jquery/jquery.min.js",
+              "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
+              "src/assets/js/adminlte.js"
+            ],
+            "allowedCommonJsDependencies": [
+              "sweetalert2"
             ]
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": false
+                },
+                "fonts": true
+              },
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "50kb",
+                  "maximumError": "60kb"
                 }
               ],
               "outputHashing": "all"
@@ -100,30 +110,29 @@
               "src/styles.css",
                 "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/admin-lte/plugins/fontawesome-free/css/all.min.css",
-              "node_modules/admin-lte/plugins/overlayScrollbars/css/OverlayScrollbars.min.css",
-              "node_modules/admin-lte/dist/css/adminlte.min.css"
+              "src/assets/plugins/fontawesome-free/css/all.min.css",
+              "src/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css"
 
 
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.min.js",
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-              "node_modules/admin-lte/plugins/jquery/jquery.min.js",
-              "node_modules/admin-lte/plugins/bootstrap/js/bootstrap.bundle.min.js",
-              "node_modules/admin-lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
-              "node_modules/admin-lte/dist/js/adminlte.js",
-              "node_modules/admin-lte/plugins/jquery-mousewheel/jquery.mousewheel.js",
-              "node_modules/admin-lte/plugins/raphael/raphael.min.js",
-              "node_modules/admin-lte/plugins/jquery-mapael/jquery.mapael.min.js",
-              "node_modules/admin-lte/plugins/jquery-mapael/maps/usa_states.min.js",
-              "node_modules/admin-lte/plugins/chart.js/Chart.min.js",
-              "node_modules/admin-lte/dist/js/demo.js",
-              "node_modules/admin-lte/dist/js/pages/dashboard2.js",
+              "src/assets/plugins/jquery/jquery.min.js",
+              "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/plugins/jquery/jquery.min.js",
+              "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
+              "src/assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js",
+              "src/assets/js/adminlte.js",
+              "src/assets/plugins/jquery-mousewheel/jquery.mousewheel.js",
+              "src/assets/plugins/raphael/raphael.min.js",
+              "src/assets/plugins/jquery-mapael/jquery.mapael.min.js",
+              "src/assets/plugins/jquery-mapael/maps/usa_states.min.js",
+              "src/assets/plugins/chart.js/Chart.min.js",
+              "src/assets/js/demo.js",
+              "src/assets/js/pages/dashboard2.js",
               "src/assets/plugins/jquery/jquery.min.js",
               "src/assets/plugins/jquery-ui/jquery-ui.min.js",
               "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
-              "src/assets/dist/js/adminlte.js"
+              "src/assets/js/adminlte.js"
             ]
           }
         }

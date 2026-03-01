@@ -15,7 +15,7 @@
         <h2 class="form-title">
           <a [routerLink]="['/form-details', app.form.formName]">{{ app.form.formName }}</a>
         </h2>
-        <p class="user-info">Submitted by: <span>{{ userDataMap[app.userId]?.email }}</span></p>
+        <p class="user-info">Submitted by: <span>{{ userDataMap[app.userId].email }}</span></p>
       </div>
 
       <div class="header-right">
