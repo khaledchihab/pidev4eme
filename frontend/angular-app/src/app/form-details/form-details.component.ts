@@ -45,7 +45,7 @@ export class FormDetailsComponent implements OnInit {
         forkJoin(userRequests).subscribe({
           next: (users: UserResponseDTO[]) => {
             users.forEach(u => {
-              if (u.userId) this.usersMap[u.userId.toString()] = u;
+              if (u.id) this.usersMap[u.id.toString()] = u;
             });
             // Now you can use this.usersMap in the template
           },
