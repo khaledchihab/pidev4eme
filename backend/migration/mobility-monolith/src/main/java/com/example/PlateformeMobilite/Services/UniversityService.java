@@ -2,6 +2,7 @@ package com.example.PlateformeMobilite.Services;
 
 import com.example.PlateformeMobilite.DTO.FormDTO;
 import com.example.PlateformeMobilite.DTO.UniversityDTO;
+import com.example.PlateformeMobilite.Entity.Form;
 import com.example.PlateformeMobilite.Entity.University;
 import com.example.PlateformeMobilite.Interfaces.IUniversityService;
 import com.example.PlateformeMobilite.Repository.UniversityRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.Collections;
 
 @Service
 @Slf4j
@@ -21,17 +23,17 @@ public class UniversityService implements IUniversityService {
     private final UniversityRepository universityRepository;
     @Override
     public List<University> retrieveAllUniversities() {
-        return universityRepository.findAllWithForms();
+        return universityRepository.findAll();
     }
     @Override
     public List<UniversityDTO> getAllUniversities() {
-        List<University> universities = universityRepository.findAllWithForms();
+        List<University> universities = universityRepository.findAll();
 
         return universities.stream().map(u -> new UniversityDTO(
                 u.getUniversityId(),
                 u.getName(),
                 u.getLocation(),
-                u.getForms().stream()
+                (u.getForms() == null ? Collections.<Form>emptyList() : u.getForms()).stream()
                         .map(f -> new FormDTO(
                                 u.getUniversityId(),        // parent universityId
                                 f.getFormName(),

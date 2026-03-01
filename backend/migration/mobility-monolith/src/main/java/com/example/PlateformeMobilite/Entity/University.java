@@ -24,6 +24,7 @@ public class University implements Serializable {
     @JsonIgnore // to avoid infinite recursion when serializing
     private List<Form> forms;
     @OneToMany(mappedBy = "university", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<UniversityRating> ratings;
 
     @Transient
