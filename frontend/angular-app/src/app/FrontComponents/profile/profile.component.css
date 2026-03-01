@@ -1,0 +1,45 @@
+.profile-page {
+	margin-left: 260px;
+	padding-top: 90px;
+}
+
+.profile-card {
+	border-radius: 10px;
+}
+
+.profile-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	background: #ffffff;
+}
+
+.profile-name {
+	margin: 0;
+	font-size: 1.4rem;
+	font-weight: 600;
+}
+
+.field-label {
+	font-size: 0.85rem;
+	color: #6c757d;
+	margin-bottom: 2px;
+}
+
+.field-value {
+	font-size: 1rem;
+	font-weight: 500;
+	color: #212529;
+}
+
+@media (max-width: 992px) {
+	.profile-page {
+		margin-left: 0;
+	}
+
+	.profile-header {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+}
