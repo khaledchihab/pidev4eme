@@ -16,6 +16,7 @@ import java.util.List;
 public class University implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "universityId")
     private Long universityId;
 
     private String name;

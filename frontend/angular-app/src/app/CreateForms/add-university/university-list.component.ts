@@ -20,21 +20,21 @@ export class UniversityListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // Always load universities for READ flow, even if user profile lookup fails.
+    this.getUniversityList();
+
     const username = localStorage.getItem('Username');
     if (username) {
-      // Fetch the logged-in user's ID first
+      // Fetch user id only for rating actions.
       this.userService.getUserByUsername(username).subscribe({
         next: (user: UserResponseDTO) => {
           this.userId = user.id;
           console.log('User ID:', this.userId);
-          // Only fetch universities after we have the user ID
-          this.getUniversityList();
         },
-        error: (err) => console.error('Error fetching user', err)
+        error: (err) => {
+          console.error('Error fetching user', err);
+        }
       });
-    } else {
-      // If no user is logged in, still fetch universities
-      this.getUniversityList();
     }
   }
 

@@ -11,7 +11,7 @@ import { UserResponseDTO } from '../dto/UserResponseDTO';
 })
 export class UserService {
   PATH_OF_API = 'http://localhost:8888';
-  PATH_OF_API_AUTH = 'http://localhost:8888';  // Changed from /mobility - now points to monolith only
+  PATH_OF_API_AUTH = 'http://localhost:8888/mobility';
 
   requestHeader = new HttpHeaders({ 'No-Auth': 'True' });
   httpOptions = {
@@ -21,7 +21,7 @@ export class UserService {
   constructor(private httpclient: HttpClient, private userAuthService: UserAuthService) { }
 
   public login(loginData: any) {
-    return this.httpclient.post(this.PATH_OF_API + '/api/auth/signin', loginData, { headers: this.requestHeader });
+    return this.httpclient.post(this.PATH_OF_API_AUTH + '/authentication/login', loginData, { headers: this.requestHeader });
   }
 
   public forAdmin() {
@@ -37,7 +37,7 @@ export class UserService {
     });
   }
   public forUniversity() {
-    return this.httpclient.get(this.PATH_OF_API_AUTH + '/forUniversity', {
+    return this.httpclient.get(this.PATH_OF_API_AUTH + '/api/test/forUniversity', {
       responseType: 'text',
     });
   }

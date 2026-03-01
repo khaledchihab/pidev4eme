@@ -36,4 +36,8 @@ public class UniversityRatingService {
         return ratings.stream().mapToInt(UniversityRating::getRating).average().orElse(0.0);
     }
 
+    public List<UniversityRating> getRatingsForUniversity(Long universityId) {
+        return ratingRepository.findByUniversity_UniversityId(universityId);
+    }
+
 }
