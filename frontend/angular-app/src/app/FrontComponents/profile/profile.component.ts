@@ -28,7 +28,21 @@ export class ProfileComponent implements OnInit {
         this.currentUser = user;
       },
       error: () => {
-        this.errorMessage = 'Live profile data is unavailable. Showing available session data.';
+        const username = this.currentUser?.username || this.authUserService.getUsername();
+        if (!username) {
+          this.errorMessage = 'Live profile data is unavailable. Showing available session data.';
+          return;
+        }
+
+        this.authUserService.getUserByUsername(username).subscribe({
+          next: (user) => {
+            this.currentUser = user;
+            this.errorMessage = '';
+          },
+          error: () => {
+            this.errorMessage = 'Live profile data is unavailable. Showing available session data.';
+          }
+        });
       }
     });
   }
